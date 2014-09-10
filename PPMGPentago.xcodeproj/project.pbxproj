@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F16987C19C0C2F7008EBB6C /* greenMarble.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F16987B19C0C2F7008EBB6C /* greenMarble.png */; };
+		3F16987E19C0C68C008EBB6C /* grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F16987D19C0C68C008EBB6C /* grid.png */; };
+		3F16988019C0C696008EBB6C /* redMarble.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F16987F19C0C696008EBB6C /* redMarble.png */; };
+		3F180CA919C0CC93004B9AF9 /* PentagoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F180CA819C0CC93004B9AF9 /* PentagoViewController.m */; };
 		3F77D5F619C0BD5E00F90BD8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F77D5F519C0BD5E00F90BD8 /* Foundation.framework */; };
 		3F77D5F819C0BD5E00F90BD8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F77D5F719C0BD5E00F90BD8 /* CoreGraphics.framework */; };
 		3F77D5FA19C0BD5E00F90BD8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F77D5F919C0BD5E00F90BD8 /* UIKit.framework */; };
@@ -14,7 +18,7 @@
 		3F77D60219C0BD5E00F90BD8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F77D60119C0BD5E00F90BD8 /* main.m */; };
 		3F77D60619C0BD5E00F90BD8 /* PMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F77D60519C0BD5E00F90BD8 /* PMAppDelegate.m */; };
 		3F77D60919C0BD5E00F90BD8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F77D60719C0BD5E00F90BD8 /* Main.storyboard */; };
-		3F77D60C19C0BD5E00F90BD8 /* PMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F77D60B19C0BD5E00F90BD8 /* PMViewController.m */; };
+		3F77D60C19C0BD5E00F90BD8 /* PMSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F77D60B19C0BD5E00F90BD8 /* PMSubViewController.m */; };
 		3F77D60E19C0BD5E00F90BD8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F77D60D19C0BD5E00F90BD8 /* Images.xcassets */; };
 		3F77D61519C0BD5E00F90BD8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F77D61419C0BD5E00F90BD8 /* XCTest.framework */; };
 		3F77D61619C0BD5E00F90BD8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F77D5F519C0BD5E00F90BD8 /* Foundation.framework */; };
@@ -34,6 +38,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F16987B19C0C2F7008EBB6C /* greenMarble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenMarble.png; sourceTree = "<group>"; };
+		3F16987D19C0C68C008EBB6C /* grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grid.png; sourceTree = "<group>"; };
+		3F16987F19C0C696008EBB6C /* redMarble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redMarble.png; sourceTree = "<group>"; };
+		3F180CA719C0CC93004B9AF9 /* PentagoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PentagoViewController.h; sourceTree = "<group>"; };
+		3F180CA819C0CC93004B9AF9 /* PentagoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PentagoViewController.m; sourceTree = "<group>"; };
 		3F77D5F219C0BD5E00F90BD8 /* PPMGPentago.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPMGPentago.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F77D5F519C0BD5E00F90BD8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3F77D5F719C0BD5E00F90BD8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -45,8 +54,8 @@
 		3F77D60419C0BD5E00F90BD8 /* PMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMAppDelegate.h; sourceTree = "<group>"; };
 		3F77D60519C0BD5E00F90BD8 /* PMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMAppDelegate.m; sourceTree = "<group>"; };
 		3F77D60819C0BD5E00F90BD8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3F77D60A19C0BD5E00F90BD8 /* PMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMViewController.h; sourceTree = "<group>"; };
-		3F77D60B19C0BD5E00F90BD8 /* PMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMViewController.m; sourceTree = "<group>"; };
+		3F77D60A19C0BD5E00F90BD8 /* PMSubViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMSubViewController.h; sourceTree = "<group>"; };
+		3F77D60B19C0BD5E00F90BD8 /* PMSubViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMSubViewController.m; sourceTree = "<group>"; };
 		3F77D60D19C0BD5E00F90BD8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3F77D61319C0BD5E00F90BD8 /* PPMGPentagoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPMGPentagoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F77D61419C0BD5E00F90BD8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -113,10 +122,12 @@
 			isa = PBXGroup;
 			children = (
 				3F77D60419C0BD5E00F90BD8 /* PMAppDelegate.h */,
+				3F180CA719C0CC93004B9AF9 /* PentagoViewController.h */,
+				3F180CA819C0CC93004B9AF9 /* PentagoViewController.m */,
 				3F77D60519C0BD5E00F90BD8 /* PMAppDelegate.m */,
 				3F77D60719C0BD5E00F90BD8 /* Main.storyboard */,
-				3F77D60A19C0BD5E00F90BD8 /* PMViewController.h */,
-				3F77D60B19C0BD5E00F90BD8 /* PMViewController.m */,
+				3F77D60A19C0BD5E00F90BD8 /* PMSubViewController.h */,
+				3F77D60B19C0BD5E00F90BD8 /* PMSubViewController.m */,
 				3F77D60D19C0BD5E00F90BD8 /* Images.xcassets */,
 				3F77D5FC19C0BD5E00F90BD8 /* Supporting Files */,
 			);
@@ -126,6 +137,9 @@
 		3F77D5FC19C0BD5E00F90BD8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3F16987F19C0C696008EBB6C /* redMarble.png */,
+				3F16987D19C0C68C008EBB6C /* grid.png */,
+				3F16987B19C0C2F7008EBB6C /* greenMarble.png */,
 				3F77D5FD19C0BD5E00F90BD8 /* PPMGPentago-Info.plist */,
 				3F77D5FE19C0BD5E00F90BD8 /* InfoPlist.strings */,
 				3F77D60119C0BD5E00F90BD8 /* main.m */,
@@ -229,8 +243,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F16988019C0C696008EBB6C /* redMarble.png in Resources */,
 				3F77D60E19C0BD5E00F90BD8 /* Images.xcassets in Resources */,
+				3F16987E19C0C68C008EBB6C /* grid.png in Resources */,
 				3F77D60019C0BD5E00F90BD8 /* InfoPlist.strings in Resources */,
+				3F16987C19C0C2F7008EBB6C /* greenMarble.png in Resources */,
 				3F77D60919C0BD5E00F90BD8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,8 +268,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F77D60219C0BD5E00F90BD8 /* main.m in Sources */,
-				3F77D60C19C0BD5E00F90BD8 /* PMViewController.m in Sources */,
+				3F77D60C19C0BD5E00F90BD8 /* PMSubViewController.m in Sources */,
 				3F77D60619C0BD5E00F90BD8 /* PMAppDelegate.m in Sources */,
+				3F180CA919C0CC93004B9AF9 /* PentagoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +475,7 @@
 				3F77D62619C0BD5E00F90BD8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3F77D62719C0BD5E00F90BD8 /* Build configuration list for PBXNativeTarget "PPMGPentagoTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +484,7 @@
 				3F77D62919C0BD5E00F90BD8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

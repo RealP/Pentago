@@ -1,18 +1,18 @@
 //
-//  PMViewController.m
-//  PPMGPentago
+//  ViewController.m
+//  PentagoStudentVersion
 //
-//  Created by student on 9/10/14.
-//  Copyright (c) 2014 PPMGLLC. All rights reserved.
+//  Created by AAK on 2/17/14.
+//  Copyright (c) 2014 Ali Kooshesh. All rights reserved.
 //
 
-#import "PMViewController.h"
+#import "ViewController.h"
 
-@interface PMViewController ()
+@interface ViewController ()
 
 @end
 
-@implementation PMViewController
+@implementation ViewController
 
 - (void)viewDidLoad
 {

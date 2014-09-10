@@ -7,12 +7,22 @@
 //
 
 #import "PMAppDelegate.h"
+#import "PentagoViewController.h"
+
+@interface PMAppDelegate()
+
+@property(nonatomic) PentagoViewController *penViewController;
+
+@end
 
 @implementation PMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    self.penViewController = [[PentagoViewController alloc] init];
+    [self.window setRootViewController:self.penViewController];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 							
