@@ -25,6 +25,7 @@
 		3F77D61719C0BD5E00F90BD8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F77D5F919C0BD5E00F90BD8 /* UIKit.framework */; };
 		3F77D61F19C0BD5E00F90BD8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3F77D61D19C0BD5E00F90BD8 /* InfoPlist.strings */; };
 		3F77D62119C0BD5E00F90BD8 /* PPMGPentagoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F77D62019C0BD5E00F90BD8 /* PPMGPentagoTests.m */; };
+		C862E30119C0F0B400B62C55 /* PentagoBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = C862E30019C0F0B400B62C55 /* PentagoBrain.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,8 @@
 		3F77D61C19C0BD5E00F90BD8 /* PPMGPentagoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPMGPentagoTests-Info.plist"; sourceTree = "<group>"; };
 		3F77D61E19C0BD5E00F90BD8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3F77D62019C0BD5E00F90BD8 /* PPMGPentagoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPMGPentagoTests.m; sourceTree = "<group>"; };
+		C862E2FF19C0F0B400B62C55 /* PentagoBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PentagoBrain.h; sourceTree = "<group>"; };
+		C862E30019C0F0B400B62C55 /* PentagoBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PentagoBrain.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				3F77D60419C0BD5E00F90BD8 /* PMAppDelegate.h */,
+				C862E2FF19C0F0B400B62C55 /* PentagoBrain.h */,
+				C862E30019C0F0B400B62C55 /* PentagoBrain.m */,
 				3F180CA719C0CC93004B9AF9 /* PentagoViewController.h */,
 				3F180CA819C0CC93004B9AF9 /* PentagoViewController.m */,
 				3F77D60519C0BD5E00F90BD8 /* PMAppDelegate.m */,
@@ -270,6 +275,7 @@
 				3F77D60219C0BD5E00F90BD8 /* main.m in Sources */,
 				3F77D60C19C0BD5E00F90BD8 /* PMSubViewController.m in Sources */,
 				3F77D60619C0BD5E00F90BD8 /* PMAppDelegate.m in Sources */,
+				C862E30119C0F0B400B62C55 /* PentagoBrain.m in Sources */,
 				3F180CA919C0CC93004B9AF9 /* PentagoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

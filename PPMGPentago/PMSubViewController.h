@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface PMSubViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIButton *one;
-@property (weak, nonatomic) IBOutlet UIButton *two;
-@property (weak, nonatomic) IBOutlet UIButton *three;
-@property (weak, nonatomic) IBOutlet UIButton *four;
+//@property (weak, nonatomic) IBOutlet UIButton *one;
+//@property (weak, nonatomic) IBOutlet UIButton *two;
+//@property (weak, nonatomic) IBOutlet UIButton *three;
+//@property (weak, nonatomic) IBOutlet UIButton *four;
 -(id) initWithSubsquare: (int) position;
 @end
