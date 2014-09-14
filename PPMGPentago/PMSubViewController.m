@@ -34,6 +34,7 @@ const int TOP_MARGIN = 50;
 
 @property (nonatomic) UITapGestureRecognizer *tapGest;
 @property(nonatomic) UISwipeGestureRecognizer *rightSwipe;
+@property(nonatomic) UISwipeGestureRecognizer *leftSwipe;
 
 -(void) didTapTheView: (UITapGestureRecognizer *) tapObject;
 
@@ -49,9 +50,10 @@ const int TOP_MARGIN = 50;
     
     //setup grid
     _gridFrame = CGRectMake(0, 0, widthOfSubsquare, widthOfSubsquare);
-    
+
     self.gridView = [[UIView alloc] initWithFrame: _gridFrame];
     [self.gridView addGestureRecognizer:self.rightSwipe];
+    [self.gridView addGestureRecognizer:self.leftSwipe];
     [self.gridView addGestureRecognizer:self.tapGest];
     [self.view addSubview:self.gridView];
     
@@ -64,11 +66,19 @@ const int TOP_MARGIN = 50;
     [self.gridView setBackgroundColor:[UIColor blackColor]];
     [self.gridView addGestureRecognizer: self.tapGest];
     [self.gridView addGestureRecognizer:self.rightSwipe];
+    [self.gridView addGestureRecognizer:self.leftSwipe];
 
+    self.backView = [[UIView alloc] initWithFrame:_gridFrame];
+    [self.backView addSubview:self.gridView];
+    
     CGRect viewFrame = CGRectMake( (BORDER_WIDTH + widthOfSubsquare) * (subsquareNumber % 2) + BORDER_WIDTH,
                                   (BORDER_WIDTH + widthOfSubsquare) * (subsquareNumber / 2) + BORDER_WIDTH + TOP_MARGIN,
                                   widthOfSubsquare, widthOfSubsquare);
+    [self.view addSubview:self.backView];
+    [self.view addSubview:self.gridView];
     self.view.frame = viewFrame;
+    _balls = [[NSMutableArray alloc] init];
+
 
 }
 
@@ -105,6 +115,16 @@ const int TOP_MARGIN = 50;
     return _tapGest;
 }
 
+-(UISwipeGestureRecognizer *) leftSwipe
+{
+    NSLog(@"Called leftSwipe");
+    if( !_leftSwipe ) {
+        _leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeLeft:)];
+        [_leftSwipe setDirection:UISwipeGestureRecognizerDirectionLeft];
+    }
+    return _leftSwipe;
+}
+
 -(UISwipeGestureRecognizer *) rightSwipe
 {
     NSLog(@"Called swipe");
@@ -118,11 +138,10 @@ const int TOP_MARGIN = 50;
 
 -(void) didTapTheView: (UITapGestureRecognizer *) tapObject
 {
-    // p is the location of the tap in self.gridView. We convert it to the coordinates of the
-    // self.backView, which is unchanged.
+    // bp is the location of the tap in self.backView so the balls are placed in right location since gridview rotates
     
     gameStarted = YES;
-    CGPoint bp = [tapObject locationInView:self.gridView];
+    CGPoint bp = [tapObject locationInView:self.backView];
     
     NSLog(@"tapped at: %@", NSStringFromCGPoint(bp) );
     int squareWidth = widthOfSubsquare / 3;
@@ -133,40 +152,60 @@ const int TOP_MARGIN = 50;
                              squareWidth,
                              squareWidth);
     
-    
     self.ballLayer = [CALayer layer];
     [self.ballLayer addSublayer: iView.layer];
     self.ballLayer.frame = CGRectMake(0, 0, widthOfSubsquare, widthOfSubsquare);
     if( [self.balls count] > 0 )
-//        self.ballLayer.affineTransform = CGAffineTransformMakeRotation(0.0);
-        self.ballLayer.affineTransform = ((UIImageView *) self.balls[0]).layer.affineTransform;
+        self.ballLayer.affineTransform = ((UIImageView *) self.balls[0]).layer.affineTransform; // balls rotate correctly
     else
         self.ballLayer.affineTransform = CGAffineTransformIdentity;
     [self.gridView.layer addSublayer:self.ballLayer];
     [self.balls addObject:iView];
-//    [self.view addSubview:iView];
-//    [self.gridView addSubview:iView];
-
 }
 
+-(void) didSwipeLeft: (UISwipeGestureRecognizer *) swipeObject
+{
+    if( ! gameStarted )
+        return;
+    NSLog(@"called did swipe left");
+    CGAffineTransform currTransform = self.gridView.layer.affineTransform;
+    //Rotate grid
+    [UIView animateWithDuration:.5 animations:^ {
+        CGAffineTransform newTransform = CGAffineTransformConcat(currTransform, CGAffineTransformMakeRotation(M_PI*1.5));
+        self.gridView.layer.affineTransform = newTransform;
+    } completion:^(BOOL finished) {
+        //Rotate Balls
+        [UIView animateWithDuration:.25 animations:^{
+            for( UIImageView *iView in self.balls )
+                iView.layer.affineTransform = CGAffineTransformConcat(iView.layer.affineTransform, CGAffineTransformMakeRotation(M_PI/2));
+        }];
+    }];
+    [self.view bringSubviewToFront:self.gridView];
+    [self.view addGestureRecognizer:self.leftSwipe];
+    [self.view addGestureRecognizer:self.rightSwipe];
 
+}
 -(void) didSwipeRight: (UISwipeGestureRecognizer *) swipeObject
 {
     if( ! gameStarted )
         return;
     NSLog(@"called did swipe right");
-    [self.view bringSubviewToFront:self.gridView];
     CGAffineTransform currTransform = self.gridView.layer.affineTransform;
-    [UIView animateWithDuration:1 animations:^ {
+    //Rotate grid
+    [UIView animateWithDuration:.5 animations:^ {
         CGAffineTransform newTransform = CGAffineTransformConcat(currTransform, CGAffineTransformMakeRotation(M_PI/2));
         self.gridView.layer.affineTransform = newTransform;
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:1 animations:^{
+        //Rotate Balls
+        [UIView animateWithDuration:.25 animations:^{
             for( UIImageView *iView in self.balls )
                 iView.layer.affineTransform = CGAffineTransformConcat(iView.layer.affineTransform, CGAffineTransformMakeRotation(-M_PI/2));
         }];
     }];
+    [self.view bringSubviewToFront:self.gridView];
     [self.view addGestureRecognizer:self.rightSwipe];
+    [self.view addGestureRecognizer:self.leftSwipe];
+
 }
 
 - (void)didReceiveMemoryWarning
