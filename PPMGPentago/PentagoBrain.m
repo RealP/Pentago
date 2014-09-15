@@ -10,13 +10,35 @@
 
 @implementation PentagoBrain
 
+//method that provides access to one single instance of the petnago brain
+
 +(PentagoBrain *) sharedInstance
 {
+    // Only happens once!!!!
     static PentagoBrain *sharedObject = nil;
     
     if( sharedObject == nil )
         sharedObject = [[PentagoBrain alloc] init];
     return sharedObject;
+}
+
+- (BOOL) hasSwiped
+{
+    return YES;
+}
+
+
+- (BOOL) tapDownForWhat
+{
+    
+    return YES;
+}
+
+
+- (void) flipPlayer
+{
+    self.player1Turn = !self.player1Turn;
+    
 }
 
 @end

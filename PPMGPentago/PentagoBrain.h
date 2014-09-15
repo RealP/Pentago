@@ -9,7 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface PentagoBrain : NSObject
+@property (nonatomic) BOOL player1Turn;
+@property (nonatomic) BOOL didSwipe;
+@property (nonatomic) BOOL didTap;
 
+- (BOOL) hasSwiped;
+- (void) flipPlayer;
 +(PentagoBrain *) sharedInstance;
 
 @end

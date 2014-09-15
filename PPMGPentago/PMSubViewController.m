@@ -21,9 +21,10 @@ const int TOP_MARGIN = 50;
 }
 
 @property(nonatomic, strong) PentagoBrain *pBrain;
+
 @property (nonatomic, strong) UIImageView *gridImageView;
 
-@property(nonatomic) CALayer *blueLayer;
+//@property(nonatomic) CALayer *blueLayer;
 @property(nonatomic) CALayer *ballLayer;
 
 @property(nonatomic) int _widthOfSubsquare;
@@ -47,7 +48,7 @@ const int TOP_MARGIN = 50;
     [super viewDidLoad];
     widthOfSubsquare = 145;
     gameStarted = NO;
-    
+    self.pBrain = PentagoBrain.sharedInstance;
     //setup grid
     _gridFrame = CGRectMake(0, 0, widthOfSubsquare, widthOfSubsquare);
 
@@ -95,6 +96,7 @@ const int TOP_MARGIN = 50;
     widthOfSubsquare = ( appFrame.size.width - 3 * BORDER_WIDTH ) / 2;
     return self;
 }
+
 -(UIImageView *) gridImageView
 {
     if( ! _gridImageView ) {
@@ -146,7 +148,19 @@ const int TOP_MARGIN = 50;
     NSLog(@"tapped at: %@", NSStringFromCGPoint(bp) );
     int squareWidth = widthOfSubsquare / 3;
     // The board is divided into nine equally sized squares and thus width = height.
-    UIImageView *iView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"redMarble.png"]];
+    UIImageView *iView = [[UIImageView alloc] init];
+    //call has swiped
+    
+    
+    
+//    [self.pBrain tapDownForWhat]
+    //    [self.pBrain flipPlayer];
+    if(self.pBrain.player1Turn == YES){
+        iView.image = [UIImage imageNamed:@"greenMarble"];
+    }
+    else{
+        iView.image = [UIImage imageNamed:@"redMarble"];
+    }
     iView.frame = CGRectMake((int) (bp.x / squareWidth) * squareWidth,
                              (int) (bp.y / squareWidth) * squareWidth,
                              squareWidth,
@@ -187,6 +201,9 @@ const int TOP_MARGIN = 50;
 }
 -(void) didSwipeRight: (UISwipeGestureRecognizer *) swipeObject
 {
+    // if player tapped nd rotated return
+    //else tell brain player rotated
+    // and its time to switch turns
     if( ! gameStarted )
         return;
     NSLog(@"called did swipe right");

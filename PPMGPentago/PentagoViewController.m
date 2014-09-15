@@ -8,9 +8,12 @@
 
 #import "PentagoViewController.h"
 #import "PMSubViewController.h"
+#import "PentagoBrain.h"
 
 @interface PentagoViewController ()
 @property (nonatomic, strong) NSMutableArray *subViewControllers;
+
+@property (nonatomic) PentagoBrain *pBrain;
 @end
 
 @implementation PentagoViewController
@@ -21,6 +24,7 @@
     if (self) {
         // Custom initialization
     }
+    self.pBrain = [[PentagoBrain alloc] init];
     return self;
 }
 
@@ -47,6 +51,8 @@
         [self.subViewControllers addObject: p];
         [self.view addSubview: p.view];
     }
+    self.pBrain.player1Turn = YES;
+    
 }
 
 - (void)didReceiveMemoryWarning
