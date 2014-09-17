@@ -15,6 +15,7 @@
 
 - (BOOL) hasSwiped;
 - (void) flipPlayer;
+- (BOOL) isValidMove: (NSString *) move;
 +(PentagoBrain *) sharedInstance;
 
 @end

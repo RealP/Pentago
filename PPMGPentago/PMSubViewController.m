@@ -144,18 +144,18 @@ const int TOP_MARGIN = 50;
     
     gameStarted = YES;
     CGPoint bp = [tapObject locationInView:self.backView];
-    
     NSLog(@"tapped at: %@", NSStringFromCGPoint(bp) );
     int squareWidth = widthOfSubsquare / 3;
     // The board is divided into nine equally sized squares and thus width = height.
     UIImageView *iView = [[UIImageView alloc] init];
     //call has swiped
-    
-    
-    
+
 //    [self.pBrain tapDownForWhat]
-    //    [self.pBrain flipPlayer];
-    if(self.pBrain.player1Turn == YES){
+//    [self.pBrain flipPlayer];
+    if (![self.pBrain isValidMove:@"tap"]){
+        return;
+    }
+    if(self.pBrain.player1Turn){
         iView.image = [UIImage imageNamed:@"greenMarble"];
     }
     else{
@@ -182,6 +182,11 @@ const int TOP_MARGIN = 50;
     if( ! gameStarted )
         return;
     NSLog(@"called did swipe left");
+    if (![self.pBrain isValidMove:@"swipe"]){
+        [self.view bringSubviewToFront:self.gridView];
+
+        return;
+    }
     CGAffineTransform currTransform = self.gridView.layer.affineTransform;
     //Rotate grid
     [UIView animateWithDuration:.5 animations:^ {
@@ -206,6 +211,9 @@ const int TOP_MARGIN = 50;
     // and its time to switch turns
     if( ! gameStarted )
         return;
+    if (![self.pBrain isValidMove:@"swipe"]){
+        return;
+    }
     NSLog(@"called did swipe right");
     CGAffineTransform currTransform = self.gridView.layer.affineTransform;
     //Rotate grid

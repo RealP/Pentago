@@ -34,11 +34,28 @@
     return YES;
 }
 
+- (BOOL) isValidMove: (NSString *) move
+{
+    NSLog(@"Move = %@", (move));
+    if( [move isEqualToString:@"tap"] && self.didTap == NO ){
+        NSLog(@"Hi ");
+        self.didTap = YES;
+        return YES;
+    }
+    else if (self.didTap && [move  isEqual: @"swipe"] ){
+        NSLog(@"Calling flipplayer.");
+        [self flipPlayer];
+        return YES;
+    }
+    return NO;
+}
 
 - (void) flipPlayer
 {
+    NSLog(@"Called flip player");
     self.player1Turn = !self.player1Turn;
-    
+    self.didSwipe = NO;
+    self.didTap = NO;    
 }
 
 @end
