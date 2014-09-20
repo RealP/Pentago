@@ -23,8 +23,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _pBrain.initialize;
     }
-    self.pBrain = [[PentagoBrain alloc] init];
+//    self.pBrain = [[PentagoBrain alloc] init];
+
     return self;
 }
 
@@ -51,8 +53,7 @@
         [self.subViewControllers addObject: p];
         [self.view addSubview: p.view];
     }
-    self.pBrain.player1Turn = YES;
-    
+    self.pBrain.player1Turn = YES;    
 }
 
 - (void)didReceiveMemoryWarning

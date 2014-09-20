@@ -79,6 +79,7 @@ const int TOP_MARGIN = 50;
     [self.view addSubview:self.gridView];
     self.view.frame = viewFrame;
     _balls = [[NSMutableArray alloc] init];
+    self.pBrain.player1Turn = 0;
 
 
 }
@@ -119,7 +120,6 @@ const int TOP_MARGIN = 50;
 
 -(UISwipeGestureRecognizer *) leftSwipe
 {
-    NSLog(@"Called leftSwipe");
     if( !_leftSwipe ) {
         _leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeLeft:)];
         [_leftSwipe setDirection:UISwipeGestureRecognizerDirectionLeft];
@@ -129,9 +129,7 @@ const int TOP_MARGIN = 50;
 
 -(UISwipeGestureRecognizer *) rightSwipe
 {
-    NSLog(@"Called swipe");
     if( !_rightSwipe ) {
-        NSLog(@"Called right-swipe");
         _rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeRight:)];
         [_rightSwipe setDirection:UISwipeGestureRecognizerDirectionRight];
     }
@@ -144,17 +142,20 @@ const int TOP_MARGIN = 50;
     
     gameStarted = YES;
     CGPoint bp = [tapObject locationInView:self.backView];
-    NSLog(@"tapped at: %@", NSStringFromCGPoint(bp) );
     int squareWidth = widthOfSubsquare / 3;
+    CGPoint tapInGrid = CGPointMake(bp.x/squareWidth, bp.y/squareWidth);
+    if (![self.pBrain isValidTap:[NSValue valueWithCGPoint:tapInGrid] inQuadrant:subsquareNumber byPlayer:self.pBrain.player1Turn]){
+        NSLog(@"Hekki");
+    }
     // The board is divided into nine equally sized squares and thus width = height.
-    UIImageView *iView = [[UIImageView alloc] init];
     //call has swiped
 
 //    [self.pBrain tapDownForWhat]
 //    [self.pBrain flipPlayer];
-    if (![self.pBrain isValidMove:@"tap"]){
-        return;
-    }
+//    if (![self.pBrain isValidMove:@"tap"]){
+//        return;
+//    }
+    UIImageView *iView = [[UIImageView alloc] init];
     if(self.pBrain.player1Turn){
         iView.image = [UIImage imageNamed:@"greenMarble"];
     }
@@ -181,7 +182,7 @@ const int TOP_MARGIN = 50;
 {
     if( ! gameStarted )
         return;
-    NSLog(@"called did swipe left");
+//    NSLog(@"called did swipe left");
     if (![self.pBrain isValidMove:@"swipe"]){
         [self.view bringSubviewToFront:self.gridView];
 
@@ -232,7 +233,13 @@ const int TOP_MARGIN = 50;
     [self.view addGestureRecognizer:self.leftSwipe];
 
 }
-
+-(PentagoBrain *) pBrain
+{
+    if( ! _pBrain ){
+        _pBrain = [PentagoBrain sharedInstance];
+        _pBrain.initialize;}
+    return _pBrain;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

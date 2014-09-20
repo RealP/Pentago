@@ -11,12 +11,19 @@
 @implementation PentagoBrain
 
 //method that provides access to one single instance of the petnago brain
+-(void) initialize
+{
+    self.quadrant0 = @[
+                                                      @[ @"0", @"0", @"0"],
+                                                      @[ @"0", @"0", @"0"],];
+    NSLog(@"quaad= == %@",self.quadrant0);
 
+}
 +(PentagoBrain *) sharedInstance
 {
     // Only happens once!!!!
     static PentagoBrain *sharedObject = nil;
-    
+   
     if( sharedObject == nil )
         sharedObject = [[PentagoBrain alloc] init];
     return sharedObject;
@@ -34,8 +41,48 @@
     return YES;
 }
 
+//add the quadrant then fill in the array
+-(BOOL) isValidTap: (NSValue *) point inQuadrant:(int) quad byPlayer:(int)player
+{
+    int col = (int) [point CGPointValue].x;
+    int row = (int) [point CGPointValue].y;
+    if (player == 1){
+        switch (quad)
+        {
+            case 0:
+                self.quadrant0[col][row] = @"1";
+            case 1:
+                self.quadrant1[col][row] = @"1";
+            case 2:
+                self.quadrant2[col][row] = @"1";
+            case 3:
+                self.quadrant3[col][row] = @"1";
+        }
+    }
+    else{
+        switch (quad)
+        {
+            case 0:
+                self.quadrant0[col][row] = @"2";
+            case 1:
+                self.quadrant1[col][row] = @"2";
+            case 2:
+                self.quadrant2[col][row] = @"2";
+            case 3:
+                self.quadrant3[col][row] = @"2";
+        }
+    }
+    
+    NSLog(@"%@",self.quadrant0);
+//    NSLog(@"%f", [point CGPointValue].x);
+//    NSLog(@" %f", [point CGPointValue].y);
+//    NSLog(@" %d", quad);
+
+    return true;
+}
 - (BOOL) isValidMove: (NSString *) move
 {
+    
     NSLog(@"Move = %@", (move));
     if( [move isEqualToString:@"tap"] && self.didTap == NO ){
         NSLog(@"Hi ");
