@@ -29,7 +29,7 @@ const int TOP_MARGIN = 50;
 
 @property(nonatomic) int _widthOfSubsquare;
 @property(nonatomic) NSMutableArray *balls;
-
+/////////////////////////////////////////////////////////////////////
 @property(nonatomic) UIView *gridView;
 @property(nonatomic) UIView *backView;
 
@@ -79,8 +79,6 @@ const int TOP_MARGIN = 50;
     [self.view addSubview:self.gridView];
     self.view.frame = viewFrame;
     _balls = [[NSMutableArray alloc] init];
-    self.pBrain.player1Turn = 0;
-
 
 }
 
@@ -144,17 +142,13 @@ const int TOP_MARGIN = 50;
     CGPoint bp = [tapObject locationInView:self.backView];
     int squareWidth = widthOfSubsquare / 3;
     CGPoint tapInGrid = CGPointMake(bp.x/squareWidth, bp.y/squareWidth);
-    if (![self.pBrain isValidTap:[NSValue valueWithCGPoint:tapInGrid] inQuadrant:subsquareNumber byPlayer:self.pBrain.player1Turn]){
-        NSLog(@"Hekki");
+    if (self.pBrain.didTap || ![self.pBrain isValidTap:[NSValue valueWithCGPoint:tapInGrid] inQuadrant:subsquareNumber byPlayer:self.pBrain.player1Turn]){
+        return;
     }
-    // The board is divided into nine equally sized squares and thus width = height.
-    //call has swiped
+    
+    NSLog(@"In didTapview didTap== %d", self.pBrain.didTap);
+    self.pBrain.didTap = YES;
 
-//    [self.pBrain tapDownForWhat]
-//    [self.pBrain flipPlayer];
-//    if (![self.pBrain isValidMove:@"tap"]){
-//        return;
-//    }
     UIImageView *iView = [[UIImageView alloc] init];
     if(self.pBrain.player1Turn){
         iView.image = [UIImage imageNamed:@"greenMarble"];
@@ -176,18 +170,22 @@ const int TOP_MARGIN = 50;
         self.ballLayer.affineTransform = CGAffineTransformIdentity;
     [self.gridView.layer addSublayer:self.ballLayer];
     [self.balls addObject:iView];
+    [self.pBrain flipPlayer];
+
 }
 
 -(void) didSwipeLeft: (UISwipeGestureRecognizer *) swipeObject
 {
-    if( ! gameStarted )
-        return;
-//    NSLog(@"called did swipe left");
-    if (![self.pBrain isValidMove:@"swipe"]){
-        [self.view bringSubviewToFront:self.gridView];
-
+    if(self.pBrain.didTap)
+    {
         return;
     }
+    
+//    if (![self.pBrain isValidMove:@"swipe"]){
+//        [self.view bringSubviewToFront:self.gridView];
+//
+//        return;
+//    }
     CGAffineTransform currTransform = self.gridView.layer.affineTransform;
     //Rotate grid
     [UIView animateWithDuration:.5 animations:^ {
@@ -203,6 +201,8 @@ const int TOP_MARGIN = 50;
     [self.view bringSubviewToFront:self.gridView];
     [self.view addGestureRecognizer:self.leftSwipe];
     [self.view addGestureRecognizer:self.rightSwipe];
+    NSLog(@"Setting didtap to no in didswipe left pmsubview.m");
+    self.pBrain.didTap = NO;
 
 }
 -(void) didSwipeRight: (UISwipeGestureRecognizer *) swipeObject
@@ -210,11 +210,13 @@ const int TOP_MARGIN = 50;
     // if player tapped nd rotated return
     //else tell brain player rotated
     // and its time to switch turns
-    if( ! gameStarted )
-        return;
-    if (![self.pBrain isValidMove:@"swipe"]){
+    NSLog(@"In did swipe didTap === %d", self.pBrain.didTap);
+    if(!self.pBrain.didTap){
         return;
     }
+//    if (![self.pBrain isValidMove:@"swipe"]){
+//        return;
+//    }
     NSLog(@"called did swipe right");
     CGAffineTransform currTransform = self.gridView.layer.affineTransform;
     //Rotate grid
@@ -231,15 +233,17 @@ const int TOP_MARGIN = 50;
     [self.view bringSubviewToFront:self.gridView];
     [self.view addGestureRecognizer:self.rightSwipe];
     [self.view addGestureRecognizer:self.leftSwipe];
+    NSLog(@"Setting didtap to no in didswipe left pmsubview.m");
+    self.pBrain.didTap = NO;
 
 }
--(PentagoBrain *) pBrain
-{
-    if( ! _pBrain ){
-        _pBrain = [PentagoBrain sharedInstance];
-        _pBrain.initialize;}
-    return _pBrain;
-}
+//-(PentagoBrain *) pBrain
+//{
+//    if( ! _pBrain ){
+//        _pBrain = [PentagoBrain sharedInstance];
+//        _pBrain.initialize;}
+//    return _pBrain;
+//}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
