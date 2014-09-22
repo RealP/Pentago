@@ -137,7 +137,7 @@ const int TOP_MARGIN = 50;
 -(void) didTapTheView: (UITapGestureRecognizer *) tapObject
 {
     // bp is the location of the tap in self.backView so the balls are placed in right location since gridview rotates
-    
+    //fuck this shit
     gameStarted = YES;
     CGPoint bp = [tapObject locationInView:self.backView];
     int squareWidth = widthOfSubsquare / 3;
@@ -229,13 +229,13 @@ const int TOP_MARGIN = 50;
     self.pBrain.didTap = NO;
 
 }
--(PentagoBrain *) pBrain
-{
-    if( ! _pBrain ){
-        _pBrain = [PentagoBrain sharedInstance];
-        _pBrain.initialize;}
-    return _pBrain;
-}
+//-(PentagoBrain *) pBrain
+//{
+//    if( ! _pBrain ){
+//        _pBrain = [PentagoBrain sharedInstance];
+//        _pBrain.initialize;}
+//    return _pBrain;
+//}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
