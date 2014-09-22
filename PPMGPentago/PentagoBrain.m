@@ -19,6 +19,8 @@
         [self.quadrant0 insertObject:[NSMutableArray arrayWithObjects:@"0",@"0",@"0",nil] atIndex:1];
         [self.quadrant0 insertObject:[NSMutableArray arrayWithObjects:@"0",@"0",@"0",nil] atIndex:2];
     }
+    NSLog(@"%@", self.quadrant0);
+    NSLog(@"%@", self.quadrant0[2][0]);
     if (self.quadrant1 == nil){
         self.quadrant1 = [[NSMutableArray alloc] initWithCapacity:3];
         [self.quadrant1 insertObject:[NSMutableArray arrayWithObjects:@"0",@"0",@"0",nil] atIndex:0];
@@ -217,13 +219,43 @@
 //    self.didTap = NO;    
 }
 
--(void) rotateMatricesRight
+-(void) rotateMatricesRight: (int)quad
 {
     //  1 1 0 --> 0 0 1
     //  0 1 0 --> 0 1 1
     //  0 0 0 --> 0 0 0
     // row0 --> col2 . row1 --> col 1 . row2 --> col0
+    NSLog(@"%@", self.quadrant0[1][2]);
+    NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity: 3];
+    if (quad==0){
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[0][2],self.quadrant0[0][1],self.quadrant0[0][0],nil] atIndex:0];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[1][2],self.quadrant0[1][1],self.quadrant0[1][0],nil] atIndex:1];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[2][2],self.quadrant0[2][1],self.quadrant0[2][0],nil] atIndex:2];
+        self.quadrant0 = newArray;
+    }
+    else if (quad == 1){
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant1[0][2],self.quadrant1[0][1],self.quadrant1[0][0],nil] atIndex:0];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant1[1][2],self.quadrant1[1][1],self.quadrant1[1][0],nil] atIndex:1];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant1[2][2],self.quadrant1[2][1],self.quadrant1[2][0],nil] atIndex:2];
+        self.quadrant1 = newArray;
+    }
+    else if (quad == 2){
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant2[0][2],self.quadrant2[0][1],self.quadrant2[0][0],nil] atIndex:0];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant2[1][2],self.quadrant2[1][1],self.quadrant2[1][0],nil] atIndex:1];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant2[2][2],self.quadrant2[2][1],self.quadrant2[2][0],nil] atIndex:2];
+        self.quadrant2 = newArray;
+    }
+    else if (quad == 3){
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant3[0][2],self.quadrant3[0][1],self.quadrant3[0][0],nil] atIndex:0];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant3[1][2],self.quadrant3[1][1],self.quadrant3[1][0],nil] atIndex:1];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant3[2][2],self.quadrant3[2][1],self.quadrant3[2][0],nil] atIndex:2];
+        self.quadrant3 = newArray;
+    }
+
+    //    NSMutableArray *newArray = [[NSMutableArray alloc] tWithArray:self.quadrant0 copyItems:YES];
     
+//    NSLog(@"quad0 = %@", self.quadrant0);
+    NSLog(@"copy of quad = %@", newArray);
     return;
 }
 

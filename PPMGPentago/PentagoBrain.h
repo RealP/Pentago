@@ -20,7 +20,7 @@
 @property(nonatomic) NSMutableArray *quadrant1;
 @property(nonatomic) NSMutableArray *quadrant2;
 @property(nonatomic) NSMutableArray *quadrant3;
-
+-(void) rotateMatricesRight: (int)quad;
 -(BOOL) isValidTap: (NSValue *) point inQuadrant:(int) quad byPlayer:(int)player;
 -(BOOL) isValidSwipe;
 

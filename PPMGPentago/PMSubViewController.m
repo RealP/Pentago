@@ -180,12 +180,6 @@ const int TOP_MARGIN = 50;
     {
         return;
     }
-    
-//    if (![self.pBrain isValidMove:@"swipe"]){
-//        [self.view bringSubviewToFront:self.gridView];
-//
-//        return;
-//    }
     CGAffineTransform currTransform = self.gridView.layer.affineTransform;
     //Rotate grid
     [UIView animateWithDuration:.5 animations:^ {
@@ -214,9 +208,7 @@ const int TOP_MARGIN = 50;
     if(!self.pBrain.didTap){
         return;
     }
-//    if (![self.pBrain isValidMove:@"swipe"]){
-//        return;
-//    }
+//    [self.pBrain rotateMatricesRight:subsquareNumber];
     NSLog(@"called did swipe right");
     CGAffineTransform currTransform = self.gridView.layer.affineTransform;
     //Rotate grid
@@ -237,13 +229,13 @@ const int TOP_MARGIN = 50;
     self.pBrain.didTap = NO;
 
 }
-//-(PentagoBrain *) pBrain
-//{
-//    if( ! _pBrain ){
-//        _pBrain = [PentagoBrain sharedInstance];
-//        _pBrain.initialize;}
-//    return _pBrain;
-//}
+-(PentagoBrain *) pBrain
+{
+    if( ! _pBrain ){
+        _pBrain = [PentagoBrain sharedInstance];
+        _pBrain.initialize;}
+    return _pBrain;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
