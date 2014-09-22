@@ -170,16 +170,20 @@ const int TOP_MARGIN = 50;
         self.ballLayer.affineTransform = CGAffineTransformIdentity;
     [self.gridView.layer addSublayer:self.ballLayer];
     [self.balls addObject:iView];
+    
     [self.pBrain flipPlayer];
 
 }
 
 -(void) didSwipeLeft: (UISwipeGestureRecognizer *) swipeObject
 {
-    if(self.pBrain.didTap)
+    if(!self.pBrain.didTap || !gameStarted)
     {
         return;
     }
+    NSLog(@"In did swipeLeft didTap === %d", self.pBrain.didTap);
+
+    [self.pBrain rotateMatricesLeft:subsquareNumber];
     CGAffineTransform currTransform = self.gridView.layer.affineTransform;
     //Rotate grid
     [UIView animateWithDuration:.5 animations:^ {
@@ -205,10 +209,10 @@ const int TOP_MARGIN = 50;
     //else tell brain player rotated
     // and its time to switch turns
     NSLog(@"In did swipe didTap === %d", self.pBrain.didTap);
-    if(!self.pBrain.didTap){
+    if(!self.pBrain.didTap || ! gameStarted){
         return;
     }
-//    [self.pBrain rotateMatricesRight:subsquareNumber];
+    [self.pBrain rotateMatricesRight:subsquareNumber];
     NSLog(@"called did swipe right");
     CGAffineTransform currTransform = self.gridView.layer.affineTransform;
     //Rotate grid
