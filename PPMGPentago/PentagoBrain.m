@@ -43,7 +43,6 @@
     }
 
     self.player1Turn=YES;
-    self.tapHasOccured = 0;
     NSLog(@"Setting didtap = false in intiliaze in pentagobrain.m");
     self.didTap = NO;
 
@@ -61,33 +60,12 @@
     return sharedObject;
 }
 
-- (BOOL) hasSwiped
-{
-    return YES;
-}
-
 
 - (BOOL) getFlipTap
 {
     return self.didTap;
 }
 
-- (void) flipDidTap
-{
-    self.didTap = !self.didTap;
-    return;
-}
-
--(BOOL) isValidSwipe
-{
-    if (self.didTap == 1){
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
 //add the quadrant then fill in the array
 -(BOOL) isValidTap: (NSValue *) point inQuadrant:(int) quad byPlayer:(int)player
 {
@@ -124,7 +102,6 @@
                 if ([self.quadrant2[row][col]  isEqual: @"0"])
                 {
                     self.quadrant2[row][col] = @1;
-                    self.didTap=YES;
                     return YES;
                 }
                 else
@@ -151,7 +128,7 @@
             case 0:
                 if ([self.quadrant0[row][col]  isEqual: @"0"])
                 {
-                    self.quadrant0[row][col] = @1;
+                    self.quadrant0[row][col] = @2;
                     return YES;
                 }
                 else
@@ -162,7 +139,7 @@
             case 1:
                 if ([self.quadrant1[row][col]  isEqual: @"0"])
                 {
-                    self.quadrant1[row][col] = @1;
+                    self.quadrant1[row][col] = @2;
                     return YES;
                 }
                 else
@@ -173,7 +150,7 @@
             case 2:
                 if ([self.quadrant2[row][col]  isEqual: @"0"])
                 {
-                    self.quadrant2[row][col] = @1;
+                    self.quadrant2[row][col] = @2;
                     return YES;
                 }
                 else
@@ -184,7 +161,7 @@
             case 3:
                 if ([self.quadrant3[row][col]  isEqual: @"0"])
                 {
-                    self.quadrant3[row][col] = @1;
+                    self.quadrant3[row][col] = @2;
                     return YES;
                 }
                 else
@@ -196,29 +173,12 @@
     }
     return true;
 }
-- (BOOL) isValidMove: (NSString *) move
-{
-    
-    NSLog(@"Move = %@", (move));
-    if( [move isEqualToString:@"tap"] && self.didTap == NO ){
-        NSLog(@"Hi ");
-        self.didTap = YES;
-        return YES;
-    }
-    else if (self.didTap && [move  isEqual: @"swipe"] ){
-        NSLog(@"Calling flipplayer.");
-        [self flipPlayer];
-        return YES;
-    }
-    return NO;
-}
 
 - (void) flipPlayer
 {
     NSLog(@"Called flip player");
     self.player1Turn = !self.player1Turn;
-    self.didSwipe = NO;
-//    self.didTap = NO;    
+//    self.didTap = NO;
 }
 
 -(void) printArrays
@@ -273,6 +233,8 @@
     }
 }
 
+
+
 -(void) rotateMatricesRight: (int)quad
 {
     //  1 1 0 --> 0 0 1
@@ -319,5 +281,185 @@
     NSLog(@"copy of quad = %@", newArray);
     return;
 }
-
+-(int) checkForWin
+{
+    //Find a win
+    //right to left
+    NSMutableArray *fullArray = [[NSMutableArray alloc] initWithCapacity: 6];
+    [fullArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[0][0],self.quadrant0[0][1],self.quadrant0[0][2],self.quadrant1[0][0],self.quadrant1[0][1],self.quadrant1[0][2],nil] atIndex:0];
+    [fullArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[1][0],self.quadrant0[1][1],self.quadrant0[1][2],self.quadrant1[1][0],self.quadrant1[1][1],self.quadrant1[1][2],nil] atIndex:1];
+    [fullArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[2][0],self.quadrant0[2][1],self.quadrant0[2][2],self.quadrant1[2][0],self.quadrant1[2][1],self.quadrant1[2][2],nil] atIndex:2];
+    [fullArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant2[0][0],self.quadrant2[0][1],self.quadrant2[0][2],self.quadrant3[0][0],self.quadrant3[0][1],self.quadrant3[0][2],nil] atIndex:3];
+    [fullArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant2[1][0],self.quadrant2[1][1],self.quadrant2[1][2],self.quadrant3[1][0],self.quadrant3[1][1],self.quadrant3[1][2],nil] atIndex:4];
+    [fullArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant2[2][0],self.quadrant2[2][1],self.quadrant2[2][2],self.quadrant3[2][0],self.quadrant3[2][1],self.quadrant3[2][2],nil] atIndex:5];
+    
+    int player1CountTo5 = 0;
+    int player2CountTo5 = 0;
+    //HORIZANTAL
+    for(int i =0; i < 6; i++){
+        //        NSLog(@"%@ %@ %@ %@ %@ %@", fullArray[i][0], fullArray[i][1], fullArray[i][2], fullArray[i][3], fullArray[i][4], fullArray[i][5]);
+        for (int j=0; j<6; j++)
+        {
+            if ([fullArray[i][j] isEqual: @1]){
+                player1CountTo5 += 1;
+            }
+            else{
+                player1CountTo5=0;
+            }
+            if ([fullArray[i][j] isEqual: @2]){
+                player2CountTo5 += 1;
+            }
+            else{
+                player2CountTo5=0;
+            }
+            if (player1CountTo5 == 5){
+                return 1;
+            }
+            else if(player2CountTo5 == 5){
+                return 2;
+            }
+        }
+    }
+    //VERTICAL
+    player1CountTo5 =0;
+    player2CountTo5 =0;
+    for(int i =0; i < 6; i++){
+        for (int j=0; j<6; j++)
+        {
+            if ([fullArray[j][i] isEqual: @1]){
+                player1CountTo5 += 1;
+            }
+            else{
+                player1CountTo5=0;
+            }
+            if ([fullArray[j][i] isEqual: @2]){
+                player2CountTo5 += 1;
+            }
+            else{
+                player2CountTo5=0;
+            }
+            if (player1CountTo5 == 5){
+                return 1;
+            }
+            else if(player2CountTo5 == 5){
+                return 2;
+            }
+        }
+    }
+    player1CountTo5=0;
+    player2CountTo5=0;
+    //Diagonal cases 1 and 4
+    for (int i=0; i<6; i++){
+        if ([fullArray[i][i] isEqual:@1]){
+            player1CountTo5 += 1;
+        }
+        else{
+            player1CountTo5 = 0;
+        }
+        if ([fullArray[i][i] isEqual:@2]){
+            player2CountTo5 += 1;
+        }
+        else{
+            player2CountTo5 = 0;
+        }
+        if (player1CountTo5 == 5){
+            return 1;
+        }
+        else if(player2CountTo5 == 5){
+            return 2;
+        }
+        
+    }
+    //Diagonal cases 5 and 8
+    for (int i=0; i<6; i++){
+        if ([fullArray[i][5-i] isEqual:@1]){
+            player1CountTo5 += 1;
+        }
+        else{
+            player1CountTo5 = 0;
+        }
+        if ([fullArray[i][5-i] isEqual:@2]){
+            player2CountTo5 += 1;
+        }
+        else{
+            player2CountTo5 = 0;
+        }
+        if (player1CountTo5 == 5){
+            return 1;
+        }
+        else if(player2CountTo5 == 5){
+            return 2;
+        }
+        
+    }
+    player1CountTo5=0;
+    player2CountTo5=0;
+    //Diagonal Cases 2
+    for (int i=0; i<5; i++){
+        if ([fullArray[i][i+1] isEqual:@1]){
+            player1CountTo5 += 1;
+        }
+        else{
+            player1CountTo5 = 0;
+        }
+        if ([fullArray[i][i+1] isEqual:@2]){
+            player2CountTo5 += 1;
+        }
+        else{
+            player2CountTo5 = 0;
+        }
+        if (player1CountTo5 == 5){
+            return 1;
+        }
+        else if(player2CountTo5 == 5){
+            return 2;
+        }
+        
+    }
+    player1CountTo5=0;
+    player2CountTo5=0;
+    //Diagonal Cases 3
+    for (int i=0; i<5; i++){
+        if ([fullArray[i+1][i] isEqual:@1]){
+            player1CountTo5 += 1;
+        }
+        else{
+            player1CountTo5 = 0;
+        }
+        if ([fullArray[i+1][i] isEqual:@2]){
+            player2CountTo5 += 1;
+        }
+        else{
+            player2CountTo5 = 0;
+        }
+        if (player1CountTo5 == 5){
+            return 1;
+        }
+        else if(player2CountTo5 == 5){
+            return 2;
+        }
+        
+    }
+    player1CountTo5=0;
+    player2CountTo5=0;
+    //Diagonal Cases 6
+    if ([fullArray[1][5] isEqual:@1] && [fullArray[2][4] isEqual:@1] && [fullArray[3][3] isEqual:@1] && [fullArray[4][2] isEqual:@1] && [fullArray[5][1] isEqual:@1]){
+        return 1;
+    }
+    if ([fullArray[1][5] isEqual:@2] && [fullArray[2][4] isEqual:@2] && [fullArray[3][3] isEqual:@2] && [fullArray[4][2] isEqual:@2] && [fullArray[5][1] isEqual:@2]){
+        return 2;
+    }
+    
+    player1CountTo5=0;
+    player2CountTo5=0;
+    //Diagonal Cases 7
+    if ([fullArray[0][4] isEqual:@1] && [fullArray[1][3] isEqual:@1] && [fullArray[2][2] isEqual:@1] && [fullArray[3][1] isEqual:@1] && [fullArray[4][0] isEqual:@1]){
+        return 1;
+    }
+    if ([fullArray[0][4] isEqual:@2] && [fullArray[1][3] isEqual:@2] && [fullArray[2][2] isEqual:@2] && [fullArray[3][1] isEqual:@2] && [fullArray[4][0] isEqual:@2]){
+        return 2;
+    }
+    
+    return 0;
+}
 @end

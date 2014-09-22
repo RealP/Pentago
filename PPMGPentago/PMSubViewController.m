@@ -145,10 +145,9 @@ const int TOP_MARGIN = 50;
     if (self.pBrain.didTap || ![self.pBrain isValidTap:[NSValue valueWithCGPoint:tapInGrid] inQuadrant:subsquareNumber byPlayer:self.pBrain.player1Turn]){
         return;
     }
-    
-    NSLog(@"In didTapview didTap== %d", self.pBrain.didTap);
-    self.pBrain.didTap = YES;
 
+    NSLog(@"In didTapview didTap== %d", self.pBrain.didTap);
+//    self.pBrain.didTap = YES;
     UIImageView *iView = [[UIImageView alloc] init];
     if(self.pBrain.player1Turn){
         iView.image = [UIImage imageNamed:@"greenMarble"];
@@ -170,17 +169,27 @@ const int TOP_MARGIN = 50;
         self.ballLayer.affineTransform = CGAffineTransformIdentity;
     [self.gridView.layer addSublayer:self.ballLayer];
     [self.balls addObject:iView];
-    
+    int whoWon = 0;
+    whoWon = [self.pBrain checkForWin];
+    if (whoWon == 1){
+        NSLog(@"PLAYER 1 WINS");
+    }
+    else if (whoWon == 2){
+        NSLog(@"PLAYER 2 WINS");
+    }
+            
     [self.pBrain flipPlayer];
 
 }
 
 -(void) didSwipeLeft: (UISwipeGestureRecognizer *) swipeObject
 {
-    if(!self.pBrain.didTap || !gameStarted)
-    {
+//    if(!self.pBrain.didTap || !gameStarted)
+//    {
+//        return;
+//    }
+    if (! gameStarted)
         return;
-    }
     NSLog(@"In did swipeLeft didTap === %d", self.pBrain.didTap);
 
     [self.pBrain rotateMatricesLeft:subsquareNumber];
@@ -208,10 +217,12 @@ const int TOP_MARGIN = 50;
     // if player tapped nd rotated return
     //else tell brain player rotated
     // and its time to switch turns
-    NSLog(@"In did swipe didTap === %d", self.pBrain.didTap);
-    if(!self.pBrain.didTap || ! gameStarted){
+//    NSLog(@"In did swipe didTap === %d", self.pBrain.didTap);
+//    if(!self.pBrain.didTap || ! gameStarted){
+//        return;
+//    }
+    if (! gameStarted)
         return;
-    }
     [self.pBrain rotateMatricesRight:subsquareNumber];
     NSLog(@"called did swipe right");
     CGAffineTransform currTransform = self.gridView.layer.affineTransform;
