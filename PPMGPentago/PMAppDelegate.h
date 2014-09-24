@@ -11,5 +11,6 @@
 @interface PMAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+- (void) resetApp;
 
 @end

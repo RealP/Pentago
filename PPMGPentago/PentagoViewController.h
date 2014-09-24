@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PentagoBrain.h"
 
 @interface PentagoViewController : UIViewController
-
+-(void) flipPlayerLabel;
 @end

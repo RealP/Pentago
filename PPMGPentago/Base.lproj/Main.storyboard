@@ -17,12 +17,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pentago" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fDu-EJ-9Qn">
-                                <rect key="frame" x="75" y="252" width="170" height="52"/>
-                                <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="35"/>
-                                <color key="textColor" red="0.29793684385253844" green="0.99295176630434778" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hh2-dw-HHq">
+                                <rect key="frame" x="0.0" y="518" width="320" height="50"/>
+                            </adBannerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <accessibility key="accessibilityConfiguration">
@@ -32,6 +29,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-241" y="151"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

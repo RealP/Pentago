@@ -25,5 +25,6 @@
 -(void) rotateMatricesLeft: (int)quad;
 -(void) rotateMatricesRight: (int)quad;
 -(int) checkForWin;
+-(void) restartGame;
 
 @end

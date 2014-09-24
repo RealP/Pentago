@@ -10,4 +10,5 @@
 
 @interface PMSubViewController : UIViewController
 -(id) initWithSubsquare: (int) position;
+-(void) setUpGrid;
 @end

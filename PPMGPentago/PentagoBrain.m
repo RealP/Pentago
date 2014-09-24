@@ -7,22 +7,22 @@
 //
 
 #import "PentagoBrain.h"
+#import "PentagoViewController.h"
+@interface PentagoBrain ()
+    @property (nonatomic) PentagoViewController * mainView;
+@end
 
 @implementation PentagoBrain
 
 //method that provides access to one single instance of the petnago brain
 -(void) initialize
 {
-    
- 
     if (self.quadrant0 == nil){
         self.quadrant0 = [[NSMutableArray alloc] initWithCapacity:3];
         [self.quadrant0 insertObject:[NSMutableArray arrayWithObjects:@"0",@"0",@"0",nil] atIndex:0];
         [self.quadrant0 insertObject:[NSMutableArray arrayWithObjects:@"0",@"0",@"0",nil] atIndex:1];
         [self.quadrant0 insertObject:[NSMutableArray arrayWithObjects:@"0",@"0",@"0",nil] atIndex:2];
     }
-    NSLog(@"%@", self.quadrant0);
-    NSLog(@"%@", self.quadrant0[2][0]);
     if (self.quadrant1 == nil){
         self.quadrant1 = [[NSMutableArray alloc] initWithCapacity:3];
         [self.quadrant1 insertObject:[NSMutableArray arrayWithObjects:@"0",@"0",@"0",nil] atIndex:0];
@@ -43,10 +43,9 @@
     }
 
     self.player1Turn=YES;
-    NSLog(@"Setting didtap = false in intiliaze in pentagobrain.m");
+    //    NSLog(@"Setting didtap = false in intiliaze in pentagobrain.m");
     self.didTap = NO;
-
-
+    self.mainView = [[PentagoViewController alloc] init];
 }
 +(PentagoBrain *) sharedInstance
 {
@@ -60,11 +59,6 @@
     return sharedObject;
 }
 
-
-- (BOOL) getFlipTap
-{
-    return self.didTap;
-}
 
 //add the quadrant then fill in the array
 -(BOOL) isValidTap: (NSValue *) point inQuadrant:(int) quad byPlayer:(int)player
@@ -178,6 +172,7 @@
 {
     NSLog(@"Called flip player");
     self.player1Turn = !self.player1Turn;
+    [self.mainView flipPlayerLabel];
 //    self.didTap = NO;
 }
 
@@ -203,15 +198,14 @@
 {
     NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity: 3] ;
     if (quad==0){
-        NSLog(@"Before rotation");
-        [self printArrays];
+//        NSLog(@"Before rotation");
+//        [self printArrays];
         [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[0][2],self.quadrant0[1][2],self.quadrant0[2][2],nil] atIndex:0];
         [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[0][1],self.quadrant0[1][1],self.quadrant0[2][1],nil] atIndex:1];
-        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[0][0],self.quadrant0[1][0],self.quadrant0[2][0],nil] atIndex:2];
-        
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[0][0],self.quadrant0[1][0],self.quadrant0[2][0],nil] atIndex:2];        
         self.quadrant0 = newArray;
-        NSLog(@"After rotation");
-        [ self printArrays ];
+//        NSLog(@"After rotation");
+//        [ self printArrays ];
     }
     else if (quad == 1){
         [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant1[0][2],self.quadrant1[1][2],self.quadrant1[2][2],nil] atIndex:0];
@@ -237,12 +231,8 @@
 
 -(void) rotateMatricesRight: (int)quad
 {
-    //  1 1 0 --> 0 0 1
-    //  0 1 0 --> 0 1 1
-    //  0 0 0 --> 0 0 0
-    // row0 --> col2 . row1 --> col 1 . row2 --> col0
-    NSLog(@"%@", self.quadrant0);
-    NSLog(@"%@", self.quadrant0[2][0]);
+
+    // Create new array with rotated piec
     NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity: 3];
     if (quad==0){
         NSLog(@"Before rotation");
@@ -252,7 +242,6 @@
         [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[2][2],self.quadrant0[1][2],self.quadrant0[0][2],nil] atIndex:2];
 
         self.quadrant0 = newArray;
-        NSLog(@"After rotation");
         [ self printArrays ];
     }
     else if (quad == 1){
@@ -280,6 +269,19 @@
 //    NSLog(@"quad0 = %@", self.quadrant0);
     NSLog(@"copy of quad = %@", newArray);
     return;
+}
+
+-(void) restartGame{
+    for (int i=0; i<3; i++){
+        for(int j=0; j<3; j++){
+            self.quadrant0[0][0] = @"0";
+            self.quadrant1[0][0] = @"0";
+            self.quadrant2[0][0] = @"0";
+            self.quadrant3[0][0] = @"0";
+        }
+    }
+    self.didTap=NO;
+    self.player1Turn = YES;
 }
 -(int) checkForWin
 {
@@ -319,6 +321,8 @@
                 return 2;
             }
         }
+        player1CountTo5=0;
+        player2CountTo5=0;
     }
     //VERTICAL
     player1CountTo5 =0;
@@ -345,6 +349,8 @@
                 return 2;
             }
         }
+        player1CountTo5=0;
+        player2CountTo5=0;
     }
     player1CountTo5=0;
     player2CountTo5=0;

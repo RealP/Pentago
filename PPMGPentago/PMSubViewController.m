@@ -9,6 +9,7 @@
 #import "PMSubViewController.h"
 #import "PentagoBrain.h"
 #import "PentagoViewController.h"
+#import "PMAppDelegate.h"
 const int BORDER_WIDTH = 10;
 const int TOP_MARGIN = 50;
 
@@ -36,7 +37,8 @@ const int TOP_MARGIN = 50;
 @property (nonatomic) UITapGestureRecognizer *tapGest;
 @property(nonatomic) UISwipeGestureRecognizer *rightSwipe;
 @property(nonatomic) UISwipeGestureRecognizer *leftSwipe;
-
+@property(nonatomic) UIAlertView* someError;
+//@property(nonatomic)  *PMAppDelegate;
 -(void) didTapTheView: (UITapGestureRecognizer *) tapObject;
 
 @end
@@ -49,9 +51,15 @@ const int TOP_MARGIN = 50;
     widthOfSubsquare = 145;
     gameStarted = NO;
     self.pBrain = PentagoBrain.sharedInstance;
+    [self setUpGrid];
+    _balls = [[NSMutableArray alloc] init];
+    _someError = [[UIAlertView alloc] initWithTitle: @"You Win" message: @"Press Ok to Play Again" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+
+}
+-(void)setUpGrid{
     //setup grid
     _gridFrame = CGRectMake(0, 0, widthOfSubsquare, widthOfSubsquare);
-
+    
     self.gridView = [[UIView alloc] initWithFrame: _gridFrame];
     [self.gridView addGestureRecognizer:self.rightSwipe];
     [self.gridView addGestureRecognizer:self.leftSwipe];
@@ -68,7 +76,7 @@ const int TOP_MARGIN = 50;
     [self.gridView addGestureRecognizer: self.tapGest];
     [self.gridView addGestureRecognizer:self.rightSwipe];
     [self.gridView addGestureRecognizer:self.leftSwipe];
-
+    
     self.backView = [[UIView alloc] initWithFrame:_gridFrame];
     [self.backView addSubview:self.gridView];
     
@@ -78,10 +86,7 @@ const int TOP_MARGIN = 50;
     [self.view addSubview:self.backView];
     [self.view addSubview:self.gridView];
     self.view.frame = viewFrame;
-    _balls = [[NSMutableArray alloc] init];
-
 }
-
 -(id) initWithSubsquare: (int) position
 {
     // 0 1
@@ -137,7 +142,6 @@ const int TOP_MARGIN = 50;
 -(void) didTapTheView: (UITapGestureRecognizer *) tapObject
 {
     // bp is the location of the tap in self.backView so the balls are placed in right location since gridview rotates
-    //fuck this shit
     gameStarted = YES;
     CGPoint bp = [tapObject locationInView:self.backView];
     int squareWidth = widthOfSubsquare / 3;
@@ -146,7 +150,6 @@ const int TOP_MARGIN = 50;
         return;
     }
 
-    NSLog(@"In didTapview didTap== %d", self.pBrain.didTap);
 //    self.pBrain.didTap = YES;
     UIImageView *iView = [[UIImageView alloc] init];
     if(self.pBrain.player1Turn){
@@ -169,27 +172,40 @@ const int TOP_MARGIN = 50;
         self.ballLayer.affineTransform = CGAffineTransformIdentity;
     [self.gridView.layer addSublayer:self.ballLayer];
     [self.balls addObject:iView];
-    int whoWon = 0;
-    whoWon = [self.pBrain checkForWin];
-    if (whoWon == 1){
-        NSLog(@"PLAYER 1 WINS");
-    }
-    else if (whoWon == 2){
-        NSLog(@"PLAYER 2 WINS");
-    }
-            
+    [self isThereAWinner];
     [self.pBrain flipPlayer];
 
 }
 
+- (void) isThereAWinner
+{
+    int whoWon = 0;
+    whoWon = [self.pBrain checkForWin];
+    if (whoWon == 1){
+        NSLog(@"PLAYER 1 WINS");
+        [_someError show];
+        //        [self.pBrain restartGame];
+        //        [self setUpGrid];
+        //        [(PMAppDelegate *)[[UIApplication sharedApplication] delegate]resetApp];
+    }
+    else if (whoWon == 2){
+        NSLog(@"PLAYER 2 WINS");
+        [_someError show];
+        //        [self.pBrain restartGame];
+        //        [self setUpGrid];
+        //        [(PMAppDelegate *)[[UIApplication sharedApplication] delegate]resetApp];
+    }
+    return;
+}
+
 -(void) didSwipeLeft: (UISwipeGestureRecognizer *) swipeObject
 {
-//    if(!self.pBrain.didTap || !gameStarted)
-//    {
-//        return;
-//    }
-    if (! gameStarted)
-        return;
+    // if(!self.pBrain.didTap || !gameStarted)
+    // {
+    //     return;
+    // }
+   if (! gameStarted)
+       return;
     NSLog(@"In did swipeLeft didTap === %d", self.pBrain.didTap);
 
     [self.pBrain rotateMatricesLeft:subsquareNumber];
@@ -210,6 +226,7 @@ const int TOP_MARGIN = 50;
     [self.view addGestureRecognizer:self.rightSwipe];
     NSLog(@"Setting didtap to no in didswipe left pmsubview.m");
     self.pBrain.didTap = NO;
+    [self isThereAWinner];
 
 }
 -(void) didSwipeRight: (UISwipeGestureRecognizer *) swipeObject
@@ -218,11 +235,11 @@ const int TOP_MARGIN = 50;
     //else tell brain player rotated
     // and its time to switch turns
 //    NSLog(@"In did swipe didTap === %d", self.pBrain.didTap);
-//    if(!self.pBrain.didTap || ! gameStarted){
-//        return;
-//    }
-    if (! gameStarted)
-        return;
+    // if(!self.pBrain.didTap || ! gameStarted){
+    //     return;
+    // }
+   if (! gameStarted)
+       return;
     [self.pBrain rotateMatricesRight:subsquareNumber];
     NSLog(@"called did swipe right");
     CGAffineTransform currTransform = self.gridView.layer.affineTransform;
@@ -242,6 +259,7 @@ const int TOP_MARGIN = 50;
     [self.view addGestureRecognizer:self.leftSwipe];
     NSLog(@"Setting didtap to no in didswipe left pmsubview.m");
     self.pBrain.didTap = NO;
+    [self isThereAWinner];
 
 }
 //-(PentagoBrain *) pBrain

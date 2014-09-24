@@ -4,7 +4,7 @@
 //
 //  Created by AAK on 2/17/14.
 //  Copyright (c) 2014 Ali Kooshesh. All rights reserved.
-//
+//  Code Completed by: Paul Pfeffer 9-24-2014
 
 #import "PentagoViewController.h"
 #import "PMSubViewController.h"
@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSMutableArray *subViewControllers;
 
 @property (nonatomic) PentagoBrain *pBrain;
+@property (nonatomic) UILabel * playerTurnLabel;
 @end
 
 @implementation PentagoViewController
@@ -23,10 +24,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-//        _pBrain.initialize;
     }
+    //Initializes pBrain
     self.pBrain = [[PentagoBrain alloc] init];
-
     return self;
 }
 
@@ -37,12 +37,44 @@
     return _subViewControllers;
 }
 
+- (void) flipPlayerLabel
+{
+    NSLog(@"Called function flipPlayerLabel in PentagoViewController");
+    if (self.playerTurnLabel == nil){
+        CGRect frame = [[UIScreen mainScreen] applicationFrame];
+        [self.view setFrame:frame];
+        self.playerTurnLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        self.playerTurnLabel.text = @"@Player 1 place your marble";
+        self.playerTurnLabel.textColor = [UIColor redColor];
+        [self.view addSubview:self.playerTurnLabel];
+        [self.playerTurnLabel sizeToFit];
+        self.playerTurnLabel.center = CGPointMake(frame.size.width/2, frame.size.height-60);
+    }
+    self.playerTurnLabel.text = @"@Player 2 place your marble";
+    self.playerTurnLabel.textColor = [UIColor greenColor];
+    [self.view addSubview:self.playerTurnLabel];
+    [self.playerTurnLabel sizeToFit];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor blackColor]];
     CGRect frame = [[UIScreen mainScreen] applicationFrame];
     [self.view setFrame:frame];
+    
+    UILabel * pentagolabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    pentagolabel.text = @"Pentago";
+    pentagolabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:pentagolabel];
+    [pentagolabel sizeToFit];
+    pentagolabel.center = CGPointMake(frame.size.width / 2, 40);
+    
+    UILabel * imageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    imageLabel.text = @"Get 5 in Row!";
+    imageLabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:imageLabel];
+    [imageLabel sizeToFit];
+    imageLabel.center = CGPointMake(frame.size.width / 2, frame.size.height-40);
     
     // This is our root view-controller. Each of the quadrants of the game is
     // represented by a different view-controller. We create them here and add their views to the
@@ -53,8 +85,10 @@
         [self.subViewControllers addObject: p];
         [self.view addSubview: p.view];
     }
-    self.pBrain.player1Turn = YES;
-    self.pBrain.didTap = NO;
+//    // Set the following variables
+//    self.pBrain.player1Turn = YES;
+//    self.pBrain.didTap = NO;
+//    [self flipPlayerLabel];
 }
 
 - (void)didReceiveMemoryWarning

@@ -53,4 +53,10 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void) resetApp
+{
+    PentagoViewController* controller = [[PentagoViewController alloc] init];
+    _window.rootViewController = controller;
+}
+
 @end
