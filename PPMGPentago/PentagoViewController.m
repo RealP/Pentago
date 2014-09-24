@@ -55,6 +55,7 @@
     [self.view addSubview:self.playerTurnLabel];
     [self.playerTurnLabel sizeToFit];
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -4,7 +4,8 @@
 //
 //  Created by AAK on 2/17/14.
 //  Copyright (c) 2014 Ali Kooshesh. All rights reserved.
-//
+//// --> Finished by: Paul Pfeffer 9/24/2014
+
 
 #import "PentagoBrain.h"
 #import "PentagoViewController.h"
@@ -45,6 +46,7 @@
     self.player1Turn=YES;
     //    NSLog(@"Setting didtap = false in intiliaze in pentagobrain.m");
     self.didTap = NO;
+    self.didSwipe = NO;
     self.mainView = [[PentagoViewController alloc] init];
 }
 +(PentagoBrain *) sharedInstance
@@ -214,15 +216,15 @@
         self.quadrant1 = newArray;
     }
     else if (quad == 2){
-        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant2[2][0],self.quadrant2[1][0],self.quadrant2[0][0],nil] atIndex:0];
-        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant2[2][1],self.quadrant2[1][1],self.quadrant2[0][1],nil] atIndex:1];
-        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant2[2][2],self.quadrant2[1][2],self.quadrant2[0][2],nil] atIndex:2];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant2[0][2],self.quadrant2[1][2],self.quadrant2[2][2],nil] atIndex:0];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant2[0][1],self.quadrant2[1][1],self.quadrant2[2][1],nil] atIndex:1];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant2[0][0],self.quadrant2[1][0],self.quadrant2[2][0],nil] atIndex:2];
         self.quadrant2 = newArray;
     }
     else if (quad == 3){
-        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant3[2][0],self.quadrant3[1][0],self.quadrant3[0][0],nil] atIndex:0];
-        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant3[2][1],self.quadrant3[1][1],self.quadrant3[0][1],nil] atIndex:1];
-        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant3[2][2],self.quadrant3[1][2],self.quadrant3[0][2],nil] atIndex:2];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant3[0][2],self.quadrant3[1][2],self.quadrant3[2][2],nil] atIndex:0];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant3[0][1],self.quadrant3[1][1],self.quadrant3[2][1],nil] atIndex:1];
+        [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant3[0][0],self.quadrant3[1][0],self.quadrant3[2][0],nil] atIndex:2];
         self.quadrant3 = newArray;
     }
 }
@@ -262,22 +264,19 @@
         [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant3[2][2],self.quadrant3[1][2],self.quadrant3[0][2],nil] atIndex:2];
         self.quadrant3 = newArray;
     }
-//    [ self printArrays ];
 
-    //    NSMutableArray *newArray = [[NSMutableArray alloc] tWithArray:self.quadrant0 copyItems:YES];
-    
-//    NSLog(@"quad0 = %@", self.quadrant0);
-    NSLog(@"copy of quad = %@", newArray);
+//    NSLog(@"copy of quad = %@", newArray);
     return;
 }
 
 -(void) restartGame{
+    
     for (int i=0; i<3; i++){
         for(int j=0; j<3; j++){
-            self.quadrant0[0][0] = @"0";
-            self.quadrant1[0][0] = @"0";
-            self.quadrant2[0][0] = @"0";
-            self.quadrant3[0][0] = @"0";
+            self.quadrant0[i][j] = @"0";
+            self.quadrant1[i][j] = @"0";
+            self.quadrant2[i][j] = @"0";
+            self.quadrant3[i][j] = @"0";
         }
     }
     self.didTap=NO;
@@ -285,6 +284,7 @@
 }
 -(int) checkForWin
 {
+    [self printArrays];
     //Find a win
     //right to left
     NSMutableArray *fullArray = [[NSMutableArray alloc] initWithCapacity: 6];

@@ -17,6 +17,7 @@
 
 @property (nonatomic) BOOL player1Turn;
 @property (nonatomic) BOOL didTap;
+@property (nonatomic) BOOL didSwipe;
 
 +(PentagoBrain *) sharedInstance;
 - (void) flipPlayer;

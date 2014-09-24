@@ -4,7 +4,8 @@
 //
 //  Created by student on 9/10/14.
 //  Copyright (c) 2014 PPMGLLC. All rights reserved.
-//
+//// --> Finished by: Paul Pfeffer 9/24/2014
+
 
 #import "PMAppDelegate.h"
 #import "PentagoViewController.h"
@@ -12,6 +13,7 @@
 @interface PMAppDelegate()
 
 @property(nonatomic) PentagoViewController *penViewController;
+@property(nonatomic) PentagoViewController *oldInstance;
 
 @end
 
@@ -53,9 +55,14 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+//Work in progress
 - (void) resetApp
 {
+    // keeps a copy of the old instance gets reset after 
+    self.oldInstance = (PentagoViewController *) _window.rootViewController;
     PentagoViewController* controller = [[PentagoViewController alloc] init];
+    // deletes the old (and active) PentagoViewController
+    // reassign the rootViewController to the new instance
     _window.rootViewController = controller;
 }
 

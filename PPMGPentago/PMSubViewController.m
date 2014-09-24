@@ -3,8 +3,9 @@
 //  PPMGPentago
 //
 //  Created by student on 9/10/14.
-//  Copyright (c) 2014 PPMGLLC. All rights reserved.
-//
+//  Copyright (c) 2014
+//// --> Finished by: Paul Pfeffer 9/24/2014
+
 
 #import "PMSubViewController.h"
 #import "PentagoBrain.h"
@@ -37,7 +38,9 @@ const int TOP_MARGIN = 50;
 @property (nonatomic) UITapGestureRecognizer *tapGest;
 @property(nonatomic) UISwipeGestureRecognizer *rightSwipe;
 @property(nonatomic) UISwipeGestureRecognizer *leftSwipe;
-@property(nonatomic) UIAlertView* someError;
+@property(nonatomic) UIAlertView* winMessage1;
+@property(nonatomic) UIAlertView* winMessage2;
+
 //@property(nonatomic)  *PMAppDelegate;
 -(void) didTapTheView: (UITapGestureRecognizer *) tapObject;
 
@@ -53,8 +56,8 @@ const int TOP_MARGIN = 50;
     self.pBrain = PentagoBrain.sharedInstance;
     [self setUpGrid];
     _balls = [[NSMutableArray alloc] init];
-    _someError = [[UIAlertView alloc] initWithTitle: @"You Win" message: @"Press Ok to Play Again" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
-
+    _winMessage1 = [[UIAlertView alloc] initWithTitle: @"Player 1 You Win" message: @"Press Ok to Play Again" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+    _winMessage2 = [[UIAlertView alloc] initWithTitle: @"Player 2 You Win" message: @"Press Ok to Play Again" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
 }
 -(void)setUpGrid{
     //setup grid
@@ -142,15 +145,16 @@ const int TOP_MARGIN = 50;
 -(void) didTapTheView: (UITapGestureRecognizer *) tapObject
 {
     // bp is the location of the tap in self.backView so the balls are placed in right location since gridview rotates
-    gameStarted = YES;
     CGPoint bp = [tapObject locationInView:self.backView];
     int squareWidth = widthOfSubsquare / 3;
     CGPoint tapInGrid = CGPointMake(bp.x/squareWidth, bp.y/squareWidth);
     if (self.pBrain.didTap || ![self.pBrain isValidTap:[NSValue valueWithCGPoint:tapInGrid] inQuadrant:subsquareNumber byPlayer:self.pBrain.player1Turn]){
         return;
     }
+    gameStarted = YES;
 
 //    self.pBrain.didTap = YES;
+
     UIImageView *iView = [[UIImageView alloc] init];
     if(self.pBrain.player1Turn){
         iView.image = [UIImage imageNamed:@"greenMarble"];
@@ -174,8 +178,28 @@ const int TOP_MARGIN = 50;
     [self.balls addObject:iView];
     [self isThereAWinner];
     [self.pBrain flipPlayer];
+    self.pBrain.didSwipe = NO;
 
 }
+//
+//-(void) setUpBalls
+//{
+//    iView.frame = CGRectMake((int) (bp.x / squareWidth) * squareWidth,
+//                             (int) (bp.y / squareWidth) * squareWidth,
+//                             squareWidth,
+//                             squareWidth);
+//    
+//    self.ballLayer = [CALayer layer];
+//    [self.ballLayer addSublayer: iView.layer];
+//    self.ballLayer.frame = CGRectMake(0, 0, widthOfSubsquare, widthOfSubsquare);
+//    if( [self.balls count] > 0 )
+//        self.ballLayer.affineTransform = ((UIImageView *) self.balls[0]).layer.affineTransform; // balls rotate correctly
+//    else
+//        self.ballLayer.affineTransform = CGAffineTransformIdentity;
+//    [self.gridView.layer addSublayer:self.ballLayer];
+//    [self.balls addObject:iView];
+//    
+//}
 
 - (void) isThereAWinner
 {
@@ -183,21 +207,21 @@ const int TOP_MARGIN = 50;
     whoWon = [self.pBrain checkForWin];
     if (whoWon == 1){
         NSLog(@"PLAYER 1 WINS");
-        [_someError show];
-        //        [self.pBrain restartGame];
-        //        [self setUpGrid];
-        //        [(PMAppDelegate *)[[UIApplication sharedApplication] delegate]resetApp];
+        [_winMessage1 show];
     }
     else if (whoWon == 2){
         NSLog(@"PLAYER 2 WINS");
-        [_someError show];
-        //        [self.pBrain restartGame];
-        //        [self setUpGrid];
-        //        [(PMAppDelegate *)[[UIApplication sharedApplication] delegate]resetApp];
+        [_winMessage2 show];
     }
     return;
 }
-
+-(void) alertView:(UIAlertView *) alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if(buttonIndex ==0){
+        [self.pBrain restartGame];
+        [(PMAppDelegate *)[[UIApplication sharedApplication] delegate]resetApp];
+        
+    }
+}
 -(void) didSwipeLeft: (UISwipeGestureRecognizer *) swipeObject
 {
     // if(!self.pBrain.didTap || !gameStarted)
@@ -206,6 +230,10 @@ const int TOP_MARGIN = 50;
     // }
    if (! gameStarted)
        return;
+    if (self.pBrain.didSwipe){
+        return;
+    }
+    self.pBrain.didSwipe = YES;
     NSLog(@"In did swipeLeft didTap === %d", self.pBrain.didTap);
 
     [self.pBrain rotateMatricesLeft:subsquareNumber];
@@ -231,15 +259,18 @@ const int TOP_MARGIN = 50;
 }
 -(void) didSwipeRight: (UISwipeGestureRecognizer *) swipeObject
 {
-    // if player tapped nd rotated return
-    //else tell brain player rotated
-    // and its time to switch turns
+
 //    NSLog(@"In did swipe didTap === %d", self.pBrain.didTap);
     // if(!self.pBrain.didTap || ! gameStarted){
     //     return;
     // }
+    
    if (! gameStarted)
        return;
+    if (self.pBrain.didSwipe){
+        return;
+    }
+    self.pBrain.didSwipe = YES;
     [self.pBrain rotateMatricesRight:subsquareNumber];
     NSLog(@"called did swipe right");
     CGAffineTransform currTransform = self.gridView.layer.affineTransform;
@@ -262,13 +293,7 @@ const int TOP_MARGIN = 50;
     [self isThereAWinner];
 
 }
-//-(PentagoBrain *) pBrain
-//{
-//    if( ! _pBrain ){
-//        _pBrain = [PentagoBrain sharedInstance];
-//        _pBrain.initialize;}
-//    return _pBrain;
-//}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
