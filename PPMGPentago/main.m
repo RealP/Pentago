@@ -2,7 +2,7 @@
 //  main.m
 //  PPMGPentago
 //
-//  Created by student on 9/10/14.
+//  Created by Paul Pfeffer on 9/10/14.
 //  Copyright (c) 2014 PPMGLLC. All rights reserved.
 //
 

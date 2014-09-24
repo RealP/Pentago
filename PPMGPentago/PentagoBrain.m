@@ -9,9 +9,11 @@
 
 #import "PentagoBrain.h"
 #import "PentagoViewController.h"
-@interface PentagoBrain ()
-    @property (nonatomic) PentagoViewController * mainView;
-@end
+
+//Uncommment to finish displaying turn
+//@interface PentagoBrain ()
+//    @property (nonatomic) PentagoViewController * mainView;
+//@end
 
 @implementation PentagoBrain
 
@@ -47,7 +49,8 @@
     //    NSLog(@"Setting didtap = false in intiliaze in pentagobrain.m");
     self.didTap = NO;
     self.didSwipe = NO;
-    self.mainView = [[PentagoViewController alloc] init];
+    // Uncomment to finish displaying player turn
+    //self.mainView = [[PentagoViewController alloc] init];
 }
 +(PentagoBrain *) sharedInstance
 {
@@ -174,8 +177,8 @@
 {
     NSLog(@"Called flip player");
     self.player1Turn = !self.player1Turn;
-    [self.mainView flipPlayerLabel];
-//    self.didTap = NO;
+//  Uncomment to finish displaying player Turn
+//    [self.mainView flipPlayerLabel];
 }
 
 -(void) printArrays
@@ -200,14 +203,10 @@
 {
     NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity: 3] ;
     if (quad==0){
-//        NSLog(@"Before rotation");
-//        [self printArrays];
         [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[0][2],self.quadrant0[1][2],self.quadrant0[2][2],nil] atIndex:0];
         [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[0][1],self.quadrant0[1][1],self.quadrant0[2][1],nil] atIndex:1];
         [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant0[0][0],self.quadrant0[1][0],self.quadrant0[2][0],nil] atIndex:2];        
         self.quadrant0 = newArray;
-//        NSLog(@"After rotation");
-//        [ self printArrays ];
     }
     else if (quad == 1){
         [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant1[0][2],self.quadrant1[1][2],self.quadrant1[2][2],nil] atIndex:0];
@@ -233,8 +232,7 @@
 
 -(void) rotateMatricesRight: (int)quad
 {
-
-    // Create new array with rotated piec
+    // Create new array with rotated pieces
     NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity: 3];
     if (quad==0){
         NSLog(@"Before rotation");
@@ -264,8 +262,6 @@
         [newArray insertObject:[NSMutableArray arrayWithObjects:self.quadrant3[2][2],self.quadrant3[1][2],self.quadrant3[0][2],nil] atIndex:2];
         self.quadrant3 = newArray;
     }
-
-//    NSLog(@"copy of quad = %@", newArray);
     return;
 }
 

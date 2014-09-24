@@ -55,7 +55,8 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-//Work in progress
+//Used to restart the application after end of game
+//Not the best way to do it but it works.
 - (void) resetApp
 {
     // keeps a copy of the old instance gets reset after 
@@ -63,6 +64,7 @@
     PentagoViewController* controller = [[PentagoViewController alloc] init];
     // deletes the old (and active) PentagoViewController
     // reassign the rootViewController to the new instance
+    // which is why you need the copy of the old instance..
     _window.rootViewController = controller;
 }
 

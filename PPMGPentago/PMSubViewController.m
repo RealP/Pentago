@@ -152,15 +152,15 @@ const int TOP_MARGIN = 50;
         return;
     }
     gameStarted = YES;
-
-//    self.pBrain.didTap = YES;
+    //    Uncomment if we want to force rotation after tap
+    //    self.pBrain.didTap = YES;
 
     UIImageView *iView = [[UIImageView alloc] init];
     if(self.pBrain.player1Turn){
-        iView.image = [UIImage imageNamed:@"greenMarble"];
+        iView.image = [UIImage imageNamed:@"redMarble"];
     }
     else{
-        iView.image = [UIImage imageNamed:@"redMarble"];
+        iView.image = [UIImage imageNamed:@"greenMarble"];
     }
     iView.frame = CGRectMake((int) (bp.x / squareWidth) * squareWidth,
                              (int) (bp.y / squareWidth) * squareWidth,
@@ -181,25 +181,6 @@ const int TOP_MARGIN = 50;
     self.pBrain.didSwipe = NO;
 
 }
-//
-//-(void) setUpBalls
-//{
-//    iView.frame = CGRectMake((int) (bp.x / squareWidth) * squareWidth,
-//                             (int) (bp.y / squareWidth) * squareWidth,
-//                             squareWidth,
-//                             squareWidth);
-//    
-//    self.ballLayer = [CALayer layer];
-//    [self.ballLayer addSublayer: iView.layer];
-//    self.ballLayer.frame = CGRectMake(0, 0, widthOfSubsquare, widthOfSubsquare);
-//    if( [self.balls count] > 0 )
-//        self.ballLayer.affineTransform = ((UIImageView *) self.balls[0]).layer.affineTransform; // balls rotate correctly
-//    else
-//        self.ballLayer.affineTransform = CGAffineTransformIdentity;
-//    [self.gridView.layer addSublayer:self.ballLayer];
-//    [self.balls addObject:iView];
-//    
-//}
 
 - (void) isThereAWinner
 {
@@ -224,10 +205,9 @@ const int TOP_MARGIN = 50;
 }
 -(void) didSwipeLeft: (UISwipeGestureRecognizer *) swipeObject
 {
-    // if(!self.pBrain.didTap || !gameStarted)
-    // {
+    //    Uncomment if we want to force rotation after tap
+    // if(!self.pBrain.didTap)
     //     return;
-    // }
    if (! gameStarted)
        return;
     if (self.pBrain.didSwipe){
@@ -252,18 +232,16 @@ const int TOP_MARGIN = 50;
     [self.view bringSubviewToFront:self.gridView];
     [self.view addGestureRecognizer:self.leftSwipe];
     [self.view addGestureRecognizer:self.rightSwipe];
-    NSLog(@"Setting didtap to no in didswipe left pmsubview.m");
-    self.pBrain.didTap = NO;
+    //    Uncomment if we want to force rotation after tap
+    //    self.pBrain.didTap = NO;
     [self isThereAWinner];
 
 }
 -(void) didSwipeRight: (UISwipeGestureRecognizer *) swipeObject
 {
-
-//    NSLog(@"In did swipe didTap === %d", self.pBrain.didTap);
-    // if(!self.pBrain.didTap || ! gameStarted){
+    //    Uncomment if we want to force rotation after tap
+    // if(!self.pBrain.didTap)
     //     return;
-    // }
     
    if (! gameStarted)
        return;
@@ -272,7 +250,7 @@ const int TOP_MARGIN = 50;
     }
     self.pBrain.didSwipe = YES;
     [self.pBrain rotateMatricesRight:subsquareNumber];
-    NSLog(@"called did swipe right");
+    //    NSLog(@"called did swipe right");
     CGAffineTransform currTransform = self.gridView.layer.affineTransform;
     //Rotate grid
     [UIView animateWithDuration:.5 animations:^ {
@@ -288,8 +266,8 @@ const int TOP_MARGIN = 50;
     [self.view bringSubviewToFront:self.gridView];
     [self.view addGestureRecognizer:self.rightSwipe];
     [self.view addGestureRecognizer:self.leftSwipe];
-    NSLog(@"Setting didtap to no in didswipe left pmsubview.m");
-    self.pBrain.didTap = NO;
+    //    Uncomment if we want to force rotation after tap
+    //    self.pBrain.didTap = NO;
     [self isThereAWinner];
 
 }

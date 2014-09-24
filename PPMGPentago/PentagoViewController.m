@@ -37,6 +37,8 @@
     return _subViewControllers;
 }
 
+//Work in Progress
+//Will be used to display the players turn
 - (void) flipPlayerLabel
 {
     NSLog(@"Called function flipPlayerLabel in PentagoViewController");
@@ -63,6 +65,7 @@
     CGRect frame = [[UIScreen mainScreen] applicationFrame];
     [self.view setFrame:frame];
     
+    // Image Label at the top of screen displaying Pentago
     UILabel * pentagolabel = [[UILabel alloc] initWithFrame:CGRectZero];
     pentagolabel.text = @"Pentago";
     pentagolabel.textColor = [UIColor whiteColor];
@@ -70,6 +73,7 @@
     [pentagolabel sizeToFit];
     pentagolabel.center = CGPointMake(frame.size.width / 2, 40);
     
+    // Image Label at the bottom of screen displaying how to win
     UILabel * imageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     imageLabel.text = @"Get 5 in Row!";
     imageLabel.textColor = [UIColor whiteColor];
@@ -86,10 +90,7 @@
         [self.subViewControllers addObject: p];
         [self.view addSubview: p.view];
     }
-//    // Set the following variables
-//    self.pBrain.player1Turn = YES;
-//    self.pBrain.didTap = NO;
-//    [self flipPlayerLabel];
+
 }
 
 - (void)didReceiveMemoryWarning
