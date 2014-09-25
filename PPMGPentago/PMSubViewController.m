@@ -40,6 +40,8 @@ const int TOP_MARGIN = 50;
 @property(nonatomic) UISwipeGestureRecognizer *leftSwipe;
 @property(nonatomic) UIAlertView* winMessage1;
 @property(nonatomic) UIAlertView* winMessage2;
+@property(nonatomic) UIAlertView* drawMessage;
+
 
 //@property(nonatomic)  *PMAppDelegate;
 -(void) didTapTheView: (UITapGestureRecognizer *) tapObject;
@@ -58,6 +60,8 @@ const int TOP_MARGIN = 50;
     _balls = [[NSMutableArray alloc] init];
     _winMessage1 = [[UIAlertView alloc] initWithTitle: @"Player 1 You Win" message: @"Press Ok to Play Again" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
     _winMessage2 = [[UIAlertView alloc] initWithTitle: @"Player 2 You Win" message: @"Press Ok to Play Again" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+    _drawMessage = [[UIAlertView alloc] initWithTitle: @"Draw!" message: @"Press Ok to Play Again" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+
 }
 -(void)setUpGrid{
     //setup grid
@@ -193,6 +197,10 @@ const int TOP_MARGIN = 50;
     else if (whoWon == 2){
         NSLog(@"PLAYER 2 WINS");
         [_winMessage2 show];
+    }
+    else if(whoWon ==3){
+        NSLog(@"Cats Game");
+        [_drawMessage show];
     }
     return;
 }

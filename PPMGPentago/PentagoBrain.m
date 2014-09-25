@@ -462,6 +462,19 @@
         return 2;
     }
     
-    return 0;
+    //Check that there isnt a draw
+    for (int i =0; i<6; i++){
+        for (int j =0; j<6; j++){
+            if(![fullArray[i][j] isEqual: @"0"]){
+                continue;
+            }
+            else{
+                return 0;
+            }
+            
+        }
+    }
+    
+    return 3;
 }
 @end
